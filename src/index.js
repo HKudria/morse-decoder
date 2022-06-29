@@ -38,7 +38,33 @@ const MORSE_TABLE = {
 };
 
 function decode(expr) {
-    // write your solution here
+    const worldsWithoutSpace = expr.split('**********')
+    const decoderWorld = []
+    for (const world of worldsWithoutSpace) {
+        const symbolsArray = []
+        const tempArr = world.split('')
+        let count = 0
+        let str = ''
+        for (let i = 0; i<tempArr.length+2; i+=2){
+            if(count === 5){
+                symbolsArray.push(MORSE_TABLE[str])
+                str = ''
+                count = 0
+            }
+            if(parseInt(tempArr[i])){
+                let strByNumber = tempArr[i] + tempArr[i+1]
+                if (strByNumber === '10'){
+                    str+= '.'
+                } else {
+                    str+= '-'
+                }
+            }
+            count++;
+        }
+        decoderWorld.push(symbolsArray.join(''))
+        symbolsArray.length = 0
+    }
+    return decoderWorld.join(' ')
 }
 
 module.exports = {
